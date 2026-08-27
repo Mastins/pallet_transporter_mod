@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="pallet_transporter.i3d" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="GIANTS Editor 64bit" version="10.0.13"/>
+  </Asset>
+
+  <Files>
+  </Files>
+
+
+  <Materials>
+    <Material name="alu_frame" materialId="198" diffuseColor="0.501961 0.501961 0.501961 1" specularColor="0.8 1 0.8">
+    </Material>
+    <Material name="gum_black" materialId="218" diffuseColor="0.0117647 0.0117647 0.0117647 1">
+    </Material>
+    <Material name="safety_red" materialId="208" diffuseColor="1 0 0 1" specularColor="1 1 0">
+    </Material>
+  </Materials>
+
+
+  <Shapes externalShapesFile="pallet_transporter.i3d.shapes">
+  </Shapes>
+
+  <Scene>
+    <TransformGroup name="frame" nodeId="164">
+      <Shape name="Pallet_conveyor_frame" shapeId="1" nodeId="32" castsShadows="true" receiveShadows="true" materialIds="198"/>
+      <Shape name="pallet_transporter_leg.001" shapeId="2" nodeId="49" castsShadows="true" receiveShadows="true" materialIds="198"/>
+      <Shape name="pallet_transporter_leg.002" shapeId="3" nodeId="50" castsShadows="true" receiveShadows="true" materialIds="198"/>
+      <Shape name="platform" shapeId="4" nodeId="56" castsShadows="true" receiveShadows="true" materialIds="198"/>
+    </TransformGroup>
+    <TransformGroup name="arrows" nodeId="161">
+      <Shape name="arrow.001" shapeId="5" nodeId="51" castsShadows="true" receiveShadows="true" materialIds="208"/>
+      <Shape name="arrow.002" shapeId="6" nodeId="52" castsShadows="true" receiveShadows="true" materialIds="208"/>
+      <Shape name="arrow.003" shapeId="7" nodeId="53" castsShadows="true" receiveShadows="true" materialIds="208"/>
+      <Shape name="arrow.004" shapeId="8" nodeId="54" castsShadows="true" receiveShadows="true" materialIds="208"/>
+      <Shape name="arrow.005" shapeId="9" nodeId="55" castsShadows="true" receiveShadows="true" materialIds="208"/>
+    </TransformGroup>
+    <TransformGroup name="rollers" nodeId="156">
+      <Shape name="roller.001" shapeId="10" nodeId="33" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.002" shapeId="11" nodeId="34" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.003" shapeId="12" nodeId="35" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.004" shapeId="13" nodeId="36" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.005" shapeId="14" nodeId="37" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.006" shapeId="15" nodeId="38" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.007" shapeId="16" nodeId="39" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.008" shapeId="17" nodeId="40" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.009" shapeId="18" nodeId="41" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.010" shapeId="19" nodeId="42" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.011" shapeId="20" nodeId="43" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.012" shapeId="21" nodeId="44" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.013" shapeId="22" nodeId="45" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.014" shapeId="23" nodeId="46" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.015" shapeId="24" nodeId="47" castsShadows="true" receiveShadows="true" materialIds="218"/>
+      <Shape name="roller.016" shapeId="25" nodeId="48" castsShadows="true" receiveShadows="true" materialIds="218"/>
+    </TransformGroup>
+  </Scene>
+
+</i3D>

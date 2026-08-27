@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="108">
+    <author>Foglicek1</author>
+    <version>1.0.0.1</version>
+    
+    <title>
+        <en>Automatic Pallet transporter</en>
+        <cs>Automatický přepravník palet</cs>
+    </title>
+    
+    <description>
+        <en>Pallet transporter system that automatically transports pallets.</en>
+        <cs>Dopravníkový systém, který automaticky přepravuje palety.</cs>
+    </description>
+
+    <multiplayer supported="false"/> 
+
+    <brands>
+        <brand name="FOOGL" title="FOOGL" image="icon_foogl.dds" />
+    </brands>
+
+    <iconFilename>icon_conveyor.dds</iconFilename>
+        
+    <storeItems>
+        <storeItem xmlFilename="pallet_transporter.xml"/>
+    </storeItems>
+
+    <specializations>
+        <!-- registered specialization for the pallet transporter -->
+        <specialization name="palletTransporter" className="PalletTransporter" filename="pallet_transporter.lua" />
+    </specializations>
+
+    <placeableTypes>
+        <type name="transporterBeltPlaceable" className="Placeable" filename="$dataS/scripts/placeables/Placeable.lua">
+            <specialization name="placeable" />
+            <specialization name="palletTransporter" />
+        </type>
+    </placeableTypes>
+</modDesc>

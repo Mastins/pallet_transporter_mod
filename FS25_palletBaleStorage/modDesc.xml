@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="108">
+    <author>OmaTana</author>
+    <version>1.0.0.0</version>
+	<iconFilename>icon_palletBaleStorage.dds</iconFilename>
+    <title>
+        <en>Pallet And Bale Storage</en>
+        <de>Paletten Und Ballen-Lager</de>
+    </title>
+    <description>
+<en><![CDATA[This mod includes three pallet and bale storage sheds in different sizes and capacities, ranging from 150 to 500 pallets or bales.
+You can lower the collision barrier within these storage buildings using a large switch, allowing you to enter and drive inside.
+
+All three buildings are also available as simple shelters without storage functionality.
+
+All buildings offer color choice for the wooden plank walls.
+
+Small Bale and Pallet Storage
+Category: Storages
+Price: $3,000
+Daily upkeep: $5
+
+Bale and Pallet Storage
+Category: Storages
+Price: $5,000
+Daily upkeep: $5
+
+Large Bale and Pallet Storage
+Category: Storages
+Price: $8,000
+Daily upkeep: $5
+
+Small Shed
+Category: Sheds
+Price: $2,000
+Daily upkeep: $5
+
+Medium sized Shed
+Category: Sheds
+Price: $4,000
+Daily upkeep: $5
+
+Large Shed
+Category: Sheds
+Price: $7,000
+Daily upkeep: $5
+]]>
+</en>
+<de><![CDATA[In diesem Mod findest du drei Paletten- und Ballenlager in unterschiedlichen Größen und Lager-Kapazitäten von 150 bis 500 Paletten bzw. Ballen.
+Die Kollision innerhalb dieser Ballenlager kannst du mit einem großen Schalter runterfahren, 
+sodass du den Unterstand betreten und befahren kannst.
+
+Alle drei Gebäude gibt es auch als einfachen Unterstand, ohne Lager-Funktion.
+
+Alle Gebäude bieten freie Farbwahl für die Bretter-Holzwände.
+
+Kleines Ballen und Palettenlager
+Shopkategorie: Lager
+Preis: 3.000€
+Täglicher Unterhalt: 5€
+
+Ballen und Palettenlager
+Shopkategorie: Lager
+Preis: 5.000€
+Täglicher Unterhalt: 5€
+
+Großes Ballen und Palettenlager
+Shopkategorie: Lager
+Preis: 8.000€
+Täglicher Unterhalt: 5€
+
+Kleiner Unterstand
+Shopkategorie: Hallen
+Preis: 2.000€
+Täglicher Unterhalt: 5€
+
+Mittelgroßer Unterstand
+Shopkategorie: Hallen
+Preis: 4.000€
+Täglicher Unterhalt: 5€
+
+Großer Unterstand
+Shopkategorie: Hallen
+Preis: 7.000€
+Täglicher Unterhalt: 5€
+]]>
+</de></description>
+    <multiplayer supported="true"/>    
+	
+	<storeItems>
+        <storeItem rootNode="placeable" xmlFilename="shedBaleStorageSmall.xml"/>
+        <storeItem rootNode="placeable" xmlFilename="shedBaleStorage.xml"/>
+        <storeItem rootNode="placeable" xmlFilename="shedBaleStorageLarge.xml"/>
+        <storeItem rootNode="placeable" xmlFilename="shedSmall.xml"/>
+        <storeItem rootNode="placeable" xmlFilename="shedMedium.xml"/>
+        <storeItem rootNode="placeable" xmlFilename="shedLarge.xml"/>
+    </storeItems>
+
+<l10n>
+
+<text name="l10nColiDown">
+<en>Move collision down</en>
+<de>Kollision versenken</de>
+</text>
+
+<text name="l10nColiUp">
+<en>Move collision up</en>
+<de>Kollision rauf fahren</de>
+</text>
+
+<text name="BrownMedium">
+<en>Brown Medium</en>
+<de>Mittelbraun</de>
+</text>
+
+<text name="BrownMedium2">
+<en>Brown Medium 2</en>
+<de>Mittelbraun 2</de>
+</text>
+
+<text name="BrownLight">
+<en>Brown Bright</en>
+<de>Hellbraun</de>
+</text>
+
+<text name="BrownDark">
+<en>Brown Dark</en>
+<de>Dunkelbraun</de>
+</text>
+
+<text name="Beige">
+<en>Beige</en>
+<de>Beige</de>
+</text>
+
+<text name="OliveBeige">
+<en>Olive Beige</en>
+<de>Olivbeige</de>
+</text>
+
+<text name="BrownRed">
+<en>Brown Red</en>
+<de>Braunrot</de>
+</text>
+
+<text name="RedMatte">
+<en>Red Matte</en>
+<de>Mattrot</de>
+</text>
+
+<text name="BrightGreen">
+<en>Bright Green</en>
+<de>Hellgrün</de>
+</text>
+
+<text name="GreenMedium">
+<en>Green Medium</en>
+<de>Mittelgrün</de>
+</text>
+
+<text name="Petrol">
+<en>Petrol</en>
+<de>Petrol</de>
+</text>
+
+
+<text name="BrightLilac">
+<en>Bright Lilac</en>
+<de>Hellflieder</de>
+</text>
+
+<text name="Lilac">
+<en>Lilac</en>
+<de>Flieder</de>
+</text>
+
+</l10n>
+
+</modDesc>

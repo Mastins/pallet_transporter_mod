@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<placeable type="pallet_transporter_mod.transporterBeltPlaceable" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="$data/shared/xml/schema/placeable.xsd">
+    <storeData>
+        <name>
+            <cs>Automaticky Paletovy Dopravnik</cs>
+            <en>Automatic Pallet transporter</en>
+            <de>Automatischer Palettentransporter</de>
+        </name>
+        
+        <image>icon_conveyor.dds</image>
+        <price>4500</price>
+        <lifeTime>10000</lifeTime>
+        <dailyUpkeep>5</dailyUpkeep>
+        <canBeSold>true</canBeSold>
+        <showInStore>true</showInStore>
+        <brand>FOOGL</brand>
+        <species>placeable</species>
+        <category>storages</category>
+        <brush>
+            <type>placeable</type>
+            <category>buildings</category>
+            <tab>silos</tab>
+        </brush>
+    </storeData>
+
+    <base>
+        <filename>pallet_transporter.i3d</filename>
+        <canBeRenamed>false</canBeRenamed>
+        <boughtWithFarmland>true</boughtWithFarmland>
+    </base>
+
+    <placement useRandomYRotation="false" useManualYRotation="true">
+        <testAreas>
+            <testArea startNode="0>" endNode="0>" width="2" length="5" />
+        </testAreas>
+    </placement>
+
+    <i3dMappings>
+    </i3dMappings>
+
+     
+  
+</placeable>

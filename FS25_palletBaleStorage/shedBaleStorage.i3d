@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="shedBaleStorage.i3d" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="GIANTS Editor 64bit" version="10.0.11"/>
+  </Asset>
+
+  <Files>
+    <File fileId="23" filename="$data/maps/textures/shared/snow_diffuse.png"/>
+    <File fileId="24" filename="$data/maps/textures/shared/snow_normal.png"/>
+    <File fileId="20" filename="$data/maps/textures/shared/snow_specular.png"/>
+    <File fileId="16" filename="$data/shaders/buildingShader.xml"/>
+    <File fileId="9" filename="$data/shaders/glowShader.xml"/>
+    <File fileId="25" filename="$data/shaders/snowHeapShader.xml"/>
+    <File fileId="6" filename="$data/shared/assets/lights/lizard/buildings/industrialWallLight_diffuse.dds"/>
+    <File fileId="7" filename="$data/shared/assets/lights/lizard/buildings/industrialWallLight_normal.dds"/>
+    <File fileId="8" filename="$data/shared/assets/lights/lizard/buildings/industrialWallLight_specular.dds"/>
+    <File fileId="11" filename="$data/shared/default_normal.png"/>
+    <File fileId="3" filename="$data/shared/detailLibrary/metallic/zincGalvanized_diffuse.dds"/>
+    <File fileId="4" filename="$data/shared/detailLibrary/metallic/zincGalvanized_normal.dds"/>
+    <File fileId="5" filename="$data/shared/detailLibrary/metallic/zincGalvanized_specular.dds"/>
+    <File fileId="28" filename="$data/shared/warningStripes_diffuse.png"/>
+    <File fileId="29" filename="$data/shared/warningStripes_normal.png"/>
+    <File fileId="30" filename="$data/shared/warningStripes_specular.png"/>
+    <File fileId="10" filename="$data/shared/window02_diffuse.png"/>
+    <File fileId="12" filename="$data/shared/window02_specular.png"/>
+    <File fileId="17" filename="textures/2ndUv_mask.dds"/>
+    <File fileId="13" filename="textures/buildingWood_diffuse.dds"/>
+    <File fileId="22" filename="textures/buildingWood_height.dds"/>
+    <File fileId="14" filename="textures/buildingWood_normal.dds"/>
+    <File fileId="15" filename="textures/buildingWood_specular.dds"/>
+  </Files>
+
+
+  <Materials>
+    <Material name="coliMaterial" materialId="794" diffuseColor="1 1 1 1" specularColor="0.501961 1 0">
+    </Material>
+    <Material name="industrialWallLight_mat" materialId="795" customShaderId="9">
+      <Texture fileId="6"/>
+      <Normalmap fileId="7"/>
+      <Glossmap fileId="8"/>
+      <CustomParameter name="lightControl" value="1.5"/>
+    </Material>
+    <Material name="lambert1" materialId="796" diffuseColor="0.494118 0.494118 0.494118 1">
+    </Material>
+    <Material name="shedMaterial" materialId="797" customShaderId="16" customShaderVariation="colorScale_customParallax">
+      <Texture fileId="13"/>
+      <Normalmap fileId="14"/>
+      <Glossmap fileId="15"/>
+      <Custommap name="mMaskMap" fileId="17"/>
+      <Custommap name="mParallaxMap" fileId="22"/>
+      <CustomParameter name="dirtMossSmoothness" value="0.12 0.8"/>
+      <CustomParameter name="colorScale0" value="0.5 0.3 0.2 1"/>
+      <CustomParameter name="colorScale1" value="0.98 0.55 0.3 1"/>
+    </Material>
+    <Material name="snowMaterial" materialId="798" customShaderId="25">
+      <Texture fileId="23"/>
+      <Normalmap fileId="24"/>
+      <Glossmap fileId="20"/>
+    </Material>
+    <Material name="switchMaterial" materialId="799">
+      <Texture fileId="3"/>
+      <Normalmap fileId="4"/>
+      <Glossmap fileId="5"/>
+    </Material>
+    <Material name="UnnamedMaterial" materialId="800" diffuseColor="1 1 1 1">
+    </Material>
+    <Material name="warningStripes_mat" materialId="801">
+      <Texture fileId="28"/>
+      <Normalmap fileId="29"/>
+      <Glossmap fileId="30"/>
+    </Material>
+    <Material name="window02_mat" materialId="802" alphaBlending="true" customShaderId="9">
+      <Texture fileId="10"/>
+      <Normalmap fileId="11"/>
+      <Glossmap fileId="12"/>
+      <CustomParameter name="lightControl" value="3"/>
+    </Material>
+  </Materials>
+
+
+  <Shapes externalShapesFile="shedBaleStorage.i3d.shapes">
+  </Shapes>
+
+  <Scene>
+    <TransformGroup name="shedSmall" clipDistance="600" nodeId="818">
+      <TransformGroup name="areas" nodeId="819">
+        <TransformGroup name="testAreas" nodeId="820">
+          <TransformGroup name="Area1Start" translation="11.002 0 -4.60372" nodeId="821">
+            <TransformGroup name="Area1End" translation="-22.1574 3 20.5508" nodeId="822"/>
+          </TransformGroup>
+        </TransformGroup>
+        <TransformGroup name="clearAreas" nodeId="823">
+          <TransformGroup name="Area1Start" translation="-11.8628 0 -4.96447" nodeId="824">
+            <TransformGroup name="Area1Width" translation="0 0 22.7778" nodeId="825"/>
+            <TransformGroup name="Area1Height" translation="24.9051 0 0" nodeId="826"/>
+          </TransformGroup>
+        </TransformGroup>
+        <TransformGroup name="levelAreas" nodeId="827">
+          <TransformGroup name="Area1Start" translation="-11.8628 0 -4.96447" nodeId="828">
+            <TransformGroup name="Area1Width" translation="0 0 22.7778" nodeId="829"/>
+            <TransformGroup name="Area1Height" translation="24.9051 0 0" nodeId="830"/>
+          </TransformGroup>
+        </TransformGroup>
+        <TransformGroup name="indoorAreas" nodeId="831">
+          <TransformGroup name="Area1Start" translation="-11.0028 0 -4.57791" nodeId="832">
+            <TransformGroup name="Area1Width" translation="0 0 9.03166" nodeId="833"/>
+            <TransformGroup name="Area1Height" translation="22.2108 0 0" nodeId="834"/>
+          </TransformGroup>
+        </TransformGroup>
+        <TransformGroup name="tipOcclusionUpdateAreas" nodeId="835">
+          <TransformGroup name="Area1Start" translation="11.002 0 -4.60372" nodeId="836">
+            <TransformGroup name="Area1End" translation="-22.1574 0 20.5508" nodeId="837"/>
+          </TransformGroup>
+        </TransformGroup>
+        <TransformGroup name="tipCollision" nodeId="838">
+          <Shape name="tipCollision" shapeId="1" visibility="false" static="true" collisionFilterGroup="0x8" collisionFilterMask="0x1" clipDistance="300" nodeId="839" castsShadows="true" receiveShadows="true" materialIds="796"/>
+        </TransformGroup>
+      </TransformGroup>
+      <TransformGroup name="animatedObjects" translation="1.656e-10 1.44772e-17 -1.44772e-17" rotation="-90 90 0" nodeId="840">
+        <TransformGroup name="stopCrossingColi" translation="3.88822e-07 3.94671e-07 0" rotation="90 5.00896e-06 -90" clipDistance="100" nodeId="841">
+          <Shape name="coli" translation="6.07644e-22 1.63601 -0.324786" shapeId="2" kinematic="true" collisionFilterGroup="0x103c" collisionFilterMask="0xfffffbff" nodeId="842" castsShadows="true" receiveShadows="true" nonRenderable="true" distanceBlending="false" materialIds="800"/>
+          <TransformGroup name="stopCrossing" translation="0 1 3.88555" clipDistance="1" nodeId="843"/>
+          <TransformGroup name="stopCrossing" translation="5 1 3.88555" clipDistance="1" nodeId="844"/>
+          <TransformGroup name="stopCrossing" translation="-5 1 3.88555" clipDistance="1" nodeId="845"/>
+        </TransformGroup>
+        <Shape name="switchColi" translation="-3.32168 -10.7394 1.3" rotation="0 0 -90" shapeId="3" clipDistance="300" nodeId="846" castsShadows="true" receiveShadows="true" materialIds="799">
+          <Shape name="coliLever" translation="0 -5.09848e-06 0" shapeId="4" clipDistance="300" nodeId="847" castsShadows="true" receiveShadows="true" materialIds="799"/>
+        </Shape>
+        <Shape name="switchTrigger" translation="-3.52765 -11.0443 0.5" rotation="90 5.00896e-06 -90" shapeId="5" static="true" trigger="true" collisionFilterGroup="0x20000000" collisionFilterMask="0x110000" nodeId="848" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="796"/>
+      </TransformGroup>
+      <TransformGroup name="visuals" nodeId="849">
+        <TransformGroup name="shedLarge" rotation="-90 90 0" nodeId="850">
+          <Shape name="industrialWallLight" lockedgroup="true" translation="0.0222354 -5.29201 3.3422" rotation="-180 -1.30558e-07 0" shapeId="6" clipDistance="150" nodeId="851" castsShadows="true" receiveShadows="true" materialIds="795" weatherRequiredMask="0x40" renderInvisible="true" visibleShaderParameter="1.5">
+            <Shape name="glass" shapeId="7" clipDistance="80" nodeId="852" castsShadows="true" receiveShadows="true" materialIds="802" weatherRequiredMask="0x40" renderInvisible="true" visibleShaderParameter="3"/>
+            <Shape name="box" shapeId="8" visibility="false" nodeId="853" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="796"/>
+            <Light name="light" translation="0 -0.015 0.2" nodeId="854" type="point" color="0.8 0.6 0.4" emitDiffuse="true" emitSpecular="true" castShadowMap="true" depthMapBias="0.0012" depthMapSlopeScaleBias="2" depthMapSlopeClamp="0.0005" depthMapResolution="1024" shadowFarDistance="1000" shadowExtrusionDistance="200" softShadowsLightSize="0.5" softShadowsLightDistance="15" softShadowsDepthBiasFactor="1" softShadowsMaxPenumbraSize="0.5" range="6" weatherRequiredMask="0x40"/>
+          </Shape>
+          <Shape name="industrialWallLight" lockedgroup="true" translation="0.0222354 5.292 3.342" rotation="-180 -1.30558e-07 0" shapeId="6" clipDistance="150" nodeId="855" castsShadows="true" receiveShadows="true" materialIds="795" weatherRequiredMask="0x40" renderInvisible="true" visibleShaderParameter="1.5">
+            <Shape name="glass" shapeId="7" clipDistance="80" nodeId="856" castsShadows="true" receiveShadows="true" materialIds="802" weatherRequiredMask="0x40" renderInvisible="true" visibleShaderParameter="3"/>
+            <Shape name="box" shapeId="8" visibility="false" nodeId="857" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="796"/>
+            <Light name="light" translation="0 -0.015 0.2" nodeId="858" type="point" color="0.8 0.6 0.4" emitDiffuse="true" emitSpecular="true" castShadowMap="true" depthMapBias="0.0012" depthMapSlopeScaleBias="2" depthMapSlopeClamp="0.0005" depthMapResolution="1024" shadowFarDistance="1000" shadowExtrusionDistance="200" softShadowsLightSize="0.5" softShadowsLightDistance="15" softShadowsDepthBiasFactor="1" softShadowsMaxPenumbraSize="0.5" range="6" weatherRequiredMask="0x40"/>
+          </Shape>
+        </TransformGroup>
+        <Shape name="shedMedium" translation="0 3.88494 0" rotation="-5.76704 -0 0" shapeId="9" clipDistance="500" nodeId="859" castsShadows="true" receiveShadows="true" materialIds="797"/>
+        <Shape name="snowRoofMedium" translation="0 3.88494 0" rotation="-5.76704 -0 0" shapeId="10" nodeId="860" castsShadows="true" receiveShadows="true" materialIds="798"/>
+        <TransformGroup name="coli" nodeId="861">
+          <Shape name="shedMediumColi" translation="0 3.88494 0" rotation="-5.76704 -0 0" shapeId="11" static="true" collisionFilterGroup="0x1034" collisionFilterMask="0xfffffbff" clipDistance="150" nodeId="862" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="794"/>
+        </TransformGroup>
+      </TransformGroup>
+      <TransformGroup name="objectStorage" nodeId="863">
+        <TransformGroup name="areas" nodeId="864">
+          <TransformGroup name="spawnArea1Start" translation="5.70167 -0.01 13.1592" rotation="0 -90 0" nodeId="865">
+            <TransformGroup name="spawnArea1End" translation="6.17439 0 11.533" nodeId="866"/>
+          </TransformGroup>
+          <TransformGroup name="storageArea1Start" translation="9.99275 0 -4.22309" rotation="0 -90 0" nodeId="867">
+            <TransformGroup name="storageArea1End" translation="7.56889 0 19.9863" nodeId="868"/>
+          </TransformGroup>
+        </TransformGroup>
+        <Shape name="objectTrigger" translation="0 0 9.22042" shapeId="12" static="true" trigger="true" collisionFilterGroup="0x20000000" collisionFilterMask="0x50000" nodeId="869" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="796">
+          <TransformGroup name="objectTriggerMarker" nodeId="870"/>
+          <Shape name="warningStripes" translation="0 0.01 0" shapeId="13" clipDistance="300" nodeId="871" castsShadows="true" receiveShadows="true" materialIds="801"/>
+        </Shape>
+        <Shape name="playerTrigger" translation="7.0452 0.5 12.8778" shapeId="5" static="true" trigger="true" collisionFilterGroup="0x20000000" collisionFilterMask="0x110000" nodeId="872" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="796">
+          <TransformGroup name="playerTriggerMarker" nodeId="873"/>
+        </Shape>
+        <Shape name="infoTrigger" translation="-5e-06 1.66444 9.25004" shapeId="14" static="true" trigger="true" collisionFilterGroup="0x20000000" collisionFilterMask="0x110000" nodeId="874" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="796"/>
+      </TransformGroup>
+    </TransformGroup>
+  </Scene>
+
+</i3D>
