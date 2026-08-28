@@ -1,16 +1,16 @@
 PalletTransporter = {}
 
--- Kontrola požadavků (pro placeable vracíme true)
+-- Kontrola pozadavku (pro placeable vracime true)
 function PalletTransporter.prerequisitesPresent(specializations)
     return true
 end
 
--- FS25 PLACEABLE: Zde se registrují funkce pro daný placeable type
+-- FS25 PLACEABLE: Zde se registruji funkce pro dany placeable type
 function PalletTransporter.registerFunctions(placeableType)
 
 end
 
--- FS25 PLACEABLE: Přihlášení k událostem
+-- FS25 PLACEABLE: Prihlaseni k udalostem
 function PalletTransporter.registerEventListeners(placeableType)
     SpecializationUtil.registerEventListener(placeableType, "onLoad", PalletTransporter)
     SpecializationUtil.registerEventListener(placeableType, "onDelete", PalletTransporter)
@@ -18,11 +18,11 @@ function PalletTransporter.registerEventListeners(placeableType)
 end
 
 
--- Zavolá se při koupi nebo načtení uložené hry
+-- Zavola se pri koupi nebo nacteni ulozene hry
 function PalletTransporter:onLoad(savegame)
     self.spec_palletTransporter = {}
     
-    -- Ověřovací hláška do vývojářské konzole
+    -- Overovaci hlaska do vyvojarske konzole
     print("----------------------------------------------------------------------------")
     print("[palletTransporter] SKRIPT ZDE: Dopravnik byl uspesne polozen a inicializovan!")
     print("----------------------------------------------------------------------------")
@@ -36,5 +36,5 @@ function PalletTransporter:onDelete()
 end
 
 function PalletTransporter:onUpdate(dt, isActiveForInput, isActiveForPeriod, isSelected)
-    -- Zde bude později logika pro posun palet
+    -- Zde bude pozdeji logika pro posun palet
 end

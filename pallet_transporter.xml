@@ -31,11 +31,52 @@
 
     <placement useRandomYRotation="false" useManualYRotation="true">
         <testAreas>
-            <testArea startNode="0>" endNode="0>" width="2" length="5" />
-        </testAreas>
+            <testArea startNode="testArea1Start" endNode="testArea1End" />
+        </testAreas>       
     </placement>
 
+    <clearAreas>
+        <clearArea startNode="clearAreaStart" widthNode="clearAreaWidth" heightNode="clearAreaHeight" />
+    </clearAreas>
+
+    <leveling requireLeveling="true" maxSmoothDistance="1" maxSlope="75" maxEdgeAngle="30">
+        <levelAreas>
+            <levelArea startNode="levelAreaStart" widthNode="levelAreaWidth" heightNode="levelAreaHeight"/>
+        </levelAreas>
+    </leveling>
+
+    <indoorAreas>
+        <indoorArea startNode="indoorAreaStart" widthNode="indoorAreaWidth" heightNode="indoorAreaHeight" />
+    </indoorAreas>
+
+    <tipOcclusionUpdateAreas>
+        <tipOcclusionUpdateArea startNode="tipOcclusionUpdateAreaStart" endNode="tipOcclusionUpdateAreaEnd" />
+    </tipOcclusionUpdateAreas>
+
+    <ai>
+        <updateAreas>
+            <updateArea startNode="tipOcclusionUpdateAreaStart" endNode="tipOcclusionUpdateAreaEnd" />
+        </updateAreas>
+    </ai>
+
     <i3dMappings>
+        <i3dMapping id="testArea1Start" node="1>0" />
+        <i3dMapping id="testArea1End" node="1>0|0" />
+        <i3dMapping id="clearAreaStart" node="2>0" />
+        <i3dMapping id="clearAreaWidth" node="2>0|0" />
+        <i3dMapping id="clearAreaHeight" node="2>0|1" />
+        <i3dMapping id="levelAreaStart" node="3>0" />
+        <i3dMapping id="levelAreaWidth" node="3>0|0" />
+        <i3dMapping id="levelAreaHeight" node="3>0|1" />
+        <i3dMapping id="indoorAreaStart" node="4>0" />
+        <i3dMapping id="indoorAreaWidth" node="4>0|0" />
+        <i3dMapping id="indoorAreaHeight" node="4>0|1" />
+        <i3dMapping id="updateAreaStart" node="5>0" />
+        <i3dMapping id="updateAreaWidth" node="5>0|0" />
+        <i3dMapping id="updateAreaHeight" node="5>0|1" />
+        <i3dMapping id="tipOcclusionUpdateAreaStart" node="6>0" />
+        <i3dMapping id="tipOcclusionUpdateAreaEnd" node="6>0|0" />
+
     </i3dMappings>
 
      

@@ -25,14 +25,13 @@
         <storeItem xmlFilename="pallet_transporter.xml"/>
     </storeItems>
 
-    <specializations>
+    <placeableSpecializations>
         <!-- registered specialization for the pallet transporter -->
         <specialization name="palletTransporter" className="PalletTransporter" filename="pallet_transporter.lua" />
-    </specializations>
+    </placeableSpecializations>
 
     <placeableTypes>
-        <type name="transporterBeltPlaceable" className="Placeable" filename="$dataS/scripts/placeables/Placeable.lua">
-            <specialization name="placeable" />
+        <type name="transporterBeltPlaceable" parent="simplePlaceable" filename="$dataS/scripts/placeables/Placeable.lua">
             <specialization name="palletTransporter" />
         </type>
     </placeableTypes>
