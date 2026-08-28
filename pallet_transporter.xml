@@ -69,6 +69,23 @@
              <objectChange node="platformNode" translationActive="0 -50 0" translationInactive="0 0 0"/>
             </colorConfiguration>
     </colorConfigurations>
+<!--
+    <solarPanels>
+        <solarPanelsConfigurations>
+           
+            <solarPanelsConfiguration name="$l10n_ui_no" isActive="false" price="0">
+                <objectChange node="platformNode" visibilityActive="false" visibilityInactive="true"/>
+                <objectChange node="platformNode" translationActive="0 -50 0" translationInactive="0 0 0"/>
+            </solarPanelsConfiguration>
+
+            
+            <solarPanelsConfiguration name="$l10n_ui_yes" isActive="true" price="500" incomePerHour="0">
+                <objectChange node="platformNode" visibilityActive="true" visibilityInactive="false"/>
+                <objectChange node="platformNode" translationActive="0 0 0" translationInactive="0 -50 0"/>
+            </solarPanelsConfiguration>
+        </solarPanelsConfigurations>
+    </solarPanels>
+-->
 
     <i3dMappings>
         <i3dMapping id="platformNode" node="0>0|3" />

@@ -16,6 +16,8 @@
     </Material>
     <Material name="safety_red" materialId="7" diffuseColor="1 0 0 1" specularColor="1 1 0">
     </Material>
+    <Material name="UnnamedMaterial" materialId="104" diffuseColor="1 1 1 1">
+    </Material>
   </Materials>
 
 
@@ -90,6 +92,9 @@
         <TransformGroup name="Area1End" translation="-1.9 0 -5" nodeId="84"/>
       </TransformGroup>
     </TransformGroup>
+    <Shape name="objectTrigger" translation="0 0 3.8" shapeId="26" static="true" trigger="true" collisionFilterGroup="0x20000000" collisionFilterMask="0x50000" nodeId="103" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="104">
+      <TransformGroup name="objectTriggerMarker" nodeId="105"/>
+    </Shape>
   </Scene>
 
 </i3D>
