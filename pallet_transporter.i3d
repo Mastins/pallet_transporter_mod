@@ -95,6 +95,9 @@
     <Shape name="objectTrigger" translation="0 0 3.8" shapeId="26" static="true" trigger="true" collisionFilterGroup="0x20000000" collisionFilterMask="0x50000" nodeId="103" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="104">
       <TransformGroup name="objectTriggerMarker" nodeId="105"/>
     </Shape>
+    <Shape name="playerTrigger" translation="1.5 0 2" shapeId="27" static="true" nodeId="107" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="104">
+      <TransformGroup name="playerTriggerMarker" nodeId="108"/>
+    </Shape>
   </Scene>
 
 </i3D>

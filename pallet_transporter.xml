@@ -87,6 +87,16 @@
     </solarPanels>
 -->
 
+    <triggerMarkers>        
+        <triggerMarker node="objectTriggerMarker" filename="$data/shared/assets/marker/markerIconUnload.i3d" adjustToGround="true" />
+    </triggerMarkers>
+
+    <hotspots>
+        <hotspot type="LOADING" linkNode="objectTrigger" teleportNode="playerTriggerMarker"/>
+    </hotspots>
+
+    
+
     <i3dMappings>
         <i3dMapping id="platformNode" node="0>0|3" />
         <i3dMapping id="testArea1Start" node="1>0" />
@@ -105,6 +115,10 @@
         <i3dMapping id="updateAreaHeight" node="5>0|1" />
         <i3dMapping id="tipOcclusionUpdateAreaStart" node="6>0" />
         <i3dMapping id="tipOcclusionUpdateAreaEnd" node="6>0|0" />
+        <i3dMapping id="objectTrigger" node="7>" />
+        <i3dMapping id="objectTriggerMarker" node="7>0" />
+        <i3dMapping id="playerTrigger" node="8>" />
+        <i3dMapping id="playerTriggerMarker" node="8>0" />
 
     </i3dMappings>
 
