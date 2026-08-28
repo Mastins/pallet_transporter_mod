@@ -39,7 +39,7 @@
         <clearArea startNode="clearAreaStart" widthNode="clearAreaWidth" heightNode="clearAreaHeight" />
     </clearAreas>
 
-    <leveling requireLeveling="true" maxSmoothDistance="1" maxSlope="75" maxEdgeAngle="30">
+    <leveling requireLeveling="true" maxSmoothDistance="0" maxSlope="90" maxEdgeAngle="90">
         <levelAreas>
             <levelArea startNode="levelAreaStart" widthNode="levelAreaWidth" heightNode="levelAreaHeight"/>
         </levelAreas>
@@ -59,7 +59,19 @@
         </updateAreas>
     </ai>
 
+    <colorConfigurations>
+        <colorConfiguration name="s_platformou" isDefault="true" isSelectable="true" price="0">
+            <objectChange node="platformNode" visibilityActive="true" visibilityInactive="false"/>
+            <objectChange node="platformNode" translationActive="0 0 0" translationInactive="0 -50 0"/>
+        </colorConfiguration>
+        <colorConfiguration name="bez_platformy" isSelectable="true" price="-250">
+            <objectChange node="platformNode" collisionActive="false" visibilityInactive="true"/>
+             <objectChange node="platformNode" translationActive="0 -50 0" translationInactive="0 0 0"/>
+            </colorConfiguration>
+    </colorConfigurations>
+
     <i3dMappings>
+        <i3dMapping id="platformNode" node="0>0|3" />
         <i3dMapping id="testArea1Start" node="1>0" />
         <i3dMapping id="testArea1End" node="1>0|0" />
         <i3dMapping id="clearAreaStart" node="2>0" />
