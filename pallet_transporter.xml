@@ -95,7 +95,11 @@
         <hotspot type="LOADING" linkNode="objectTrigger" teleportNode="playerTriggerMarker"/>
     </hotspots>
 
-    
+    <palletTransporter>
+        <objectTrigger node="objectTrigger" />
+        <transporterStart node="transporterStart" />
+        <transporterEnd node="transporterEnd" speed="1" />
+    </palletTransporter>
 
     <i3dMappings>
         <i3dMapping id="platformNode" node="0>0|3" />
@@ -115,10 +119,13 @@
         <i3dMapping id="updateAreaHeight" node="5>0|1" />
         <i3dMapping id="tipOcclusionUpdateAreaStart" node="6>0" />
         <i3dMapping id="tipOcclusionUpdateAreaEnd" node="6>0|0" />
-        <i3dMapping id="objectTrigger" node="7>" />
-        <i3dMapping id="objectTriggerMarker" node="7>0" />
-        <i3dMapping id="playerTrigger" node="8>" />
-        <i3dMapping id="playerTriggerMarker" node="8>0" />
+        <i3dMapping id="playerTrigger" node="7>" />
+        <i3dMapping id="playerTriggerMarker" node="7>0" />
+        <i3dMapping id="objectTrigger" node="8>" />
+        <i3dMapping id="objectTriggerMarker" node="8>0" />
+        <i3dMapping id="transporterStart" node="9>" />
+        <i3dMapping id="transporterEnd" node="10>" />
+        
 
     </i3dMappings>
 

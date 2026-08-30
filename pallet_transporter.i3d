@@ -10,13 +10,13 @@
 
 
   <Materials>
-    <Material name="alu_frame" materialId="5" diffuseColor="0.501961 0.501961 0.501961 1" specularColor="0.8 1 0.8">
+    <Material name="alu_frame" materialId="116" diffuseColor="0.501961 0.501961 0.501961 1" specularColor="0.8 1 0.8">
     </Material>
-    <Material name="gum_black" materialId="6" diffuseColor="0.0117647 0.0117647 0.0117647 1">
+    <Material name="gum_black" materialId="117" diffuseColor="0.0117647 0.0117647 0.0117647 1">
     </Material>
-    <Material name="safety_red" materialId="7" diffuseColor="1 0 0 1" specularColor="1 1 0">
+    <Material name="safety_red" materialId="118" diffuseColor="1 0 0 1" specularColor="1 1 0">
     </Material>
-    <Material name="UnnamedMaterial" materialId="104" diffuseColor="1 1 1 1">
+    <Material name="UnnamedMaterial" materialId="119" diffuseColor="1 1 1 1">
     </Material>
   </Materials>
 
@@ -25,79 +25,81 @@
   </Shapes>
 
   <Scene>
-    <TransformGroup name="pallet_transporter" nodeId="34">
-      <TransformGroup name="frame" nodeId="35">
-        <Shape name="Pallet_conveyor_frame" shapeId="1" static="true" collisionFilterGroup="0x1034" collisionFilterMask="0xfffffbff" nodeId="36" castsShadows="true" receiveShadows="true" materialIds="5"/>
-        <Shape name="pallet_transporter_leg.001" shapeId="2" static="true" collisionFilterGroup="0x1034" collisionFilterMask="0xfffffbff" nodeId="37" castsShadows="true" receiveShadows="true" materialIds="5"/>
-        <Shape name="pallet_transporter_leg.002" shapeId="3" static="true" collisionFilterGroup="0x1034" collisionFilterMask="0xfffffbff" nodeId="38" castsShadows="true" receiveShadows="true" materialIds="5"/>
-        <Shape name="platform" shapeId="4" static="true" collisionFilterGroup="0x1034" collisionFilterMask="0xfffffbff" nodeId="39" castsShadows="true" receiveShadows="true" materialIds="5"/>
+    <TransformGroup name="pallet_transporter" nodeId="148">
+      <TransformGroup name="frame" nodeId="149">
+        <Shape name="Pallet_conveyor_frame" shapeId="1" static="true" collisionFilterGroup="0x1034" collisionFilterMask="0xfffffbff" nodeId="150" castsShadows="true" receiveShadows="true" materialIds="116"/>
+        <Shape name="pallet_transporter_leg.001" shapeId="2" static="true" collisionFilterGroup="0x1034" collisionFilterMask="0xfffffbff" nodeId="151" castsShadows="true" receiveShadows="true" materialIds="116"/>
+        <Shape name="pallet_transporter_leg.002" shapeId="3" static="true" collisionFilterGroup="0x1034" collisionFilterMask="0xfffffbff" nodeId="152" castsShadows="true" receiveShadows="true" materialIds="116"/>
+        <Shape name="platform" shapeId="4" static="true" collisionFilterGroup="0x1034" collisionFilterMask="0xfffffbff" nodeId="153" castsShadows="true" receiveShadows="true" materialIds="116"/>
       </TransformGroup>
-      <TransformGroup name="rollers" nodeId="40">
-        <Shape name="roller.001" shapeId="5" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="41" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.002" shapeId="6" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="42" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.003" shapeId="7" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="43" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.004" shapeId="8" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="44" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.005" shapeId="9" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="45" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.006" shapeId="10" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="46" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.007" shapeId="11" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="47" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.008" shapeId="12" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="48" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.009" shapeId="13" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="49" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.010" shapeId="14" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="50" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.011" shapeId="15" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="51" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.012" shapeId="16" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="52" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.013" shapeId="17" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="53" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.014" shapeId="18" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="54" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.015" shapeId="19" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="55" castsShadows="true" receiveShadows="true" materialIds="6"/>
-        <Shape name="roller.016" shapeId="20" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="56" castsShadows="true" receiveShadows="true" materialIds="6"/>
+      <TransformGroup name="rollers" nodeId="154">
+        <Shape name="roller.001" shapeId="5" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="155" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.002" shapeId="6" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="156" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.003" shapeId="7" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="157" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.004" shapeId="8" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="158" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.005" shapeId="9" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="159" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.006" shapeId="10" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="160" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.007" shapeId="11" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="161" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.008" shapeId="12" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="162" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.009" shapeId="13" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="163" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.010" shapeId="14" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="164" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.011" shapeId="15" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="165" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.012" shapeId="16" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="166" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.013" shapeId="17" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="167" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.014" shapeId="18" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="168" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.015" shapeId="19" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="169" castsShadows="true" receiveShadows="true" materialIds="117"/>
+        <Shape name="roller.016" shapeId="20" kinematic="true" collisionFilterGroup="0x10000" collisionFilterMask="0xfe3dfb83" nodeId="170" castsShadows="true" receiveShadows="true" materialIds="117"/>
       </TransformGroup>
-      <TransformGroup name="arrows" nodeId="57">
-        <Shape name="arrow.001" shapeId="21" nodeId="58" castsShadows="true" receiveShadows="true" materialIds="7"/>
-        <Shape name="arrow.002" shapeId="22" nodeId="59" castsShadows="true" receiveShadows="true" materialIds="7"/>
-        <Shape name="arrow.003" shapeId="23" nodeId="60" castsShadows="true" receiveShadows="true" materialIds="7"/>
-        <Shape name="arrow.004" shapeId="24" nodeId="61" castsShadows="true" receiveShadows="true" materialIds="7"/>
-        <Shape name="arrow.005" shapeId="25" nodeId="62" castsShadows="true" receiveShadows="true" materialIds="7"/>
-      </TransformGroup>
-    </TransformGroup>
-    <TransformGroup name="testAreas" nodeId="63">
-      <TransformGroup name="Area1Start" translation="0.95 0 2.5" nodeId="64">
-        <TransformGroup name="Area1End" translation="-1.9 2 -5" nodeId="65"/>
+      <TransformGroup name="arrows" nodeId="171">
+        <Shape name="arrow.001" shapeId="21" nodeId="172" castsShadows="true" receiveShadows="true" materialIds="118"/>
+        <Shape name="arrow.002" shapeId="22" nodeId="173" castsShadows="true" receiveShadows="true" materialIds="118"/>
+        <Shape name="arrow.003" shapeId="23" nodeId="174" castsShadows="true" receiveShadows="true" materialIds="118"/>
+        <Shape name="arrow.004" shapeId="24" nodeId="175" castsShadows="true" receiveShadows="true" materialIds="118"/>
+        <Shape name="arrow.005" shapeId="25" nodeId="176" castsShadows="true" receiveShadows="true" materialIds="118"/>
       </TransformGroup>
     </TransformGroup>
-    <TransformGroup name="clearAreas" nodeId="66">
-      <TransformGroup name="Area1Start" translation="0.95 0 -2.5" nodeId="67">
-        <TransformGroup name="Area1Width" translation="-1.9 0 0" nodeId="68"/>
-        <TransformGroup name="Area1Height" translation="0 0 5" nodeId="69"/>
+    <TransformGroup name="testAreas" nodeId="177">
+      <TransformGroup name="Area1Start" translation="0.95 0 2.5" nodeId="178">
+        <TransformGroup name="Area1End" translation="-1.9 2 -5" nodeId="179"/>
       </TransformGroup>
     </TransformGroup>
-    <TransformGroup name="levelAreas" nodeId="70">
-      <TransformGroup name="Area1Start" translation="0.45 0 -2" nodeId="71">
-        <TransformGroup name="Area1Width" translation="-0.9 0 0" nodeId="72"/>
-        <TransformGroup name="Area1Height" translation="0 0 4" nodeId="73"/>
+    <TransformGroup name="clearAreas" nodeId="180">
+      <TransformGroup name="Area1Start" translation="0.95 0 -2.5" nodeId="181">
+        <TransformGroup name="Area1Width" translation="-1.9 0 0" nodeId="182"/>
+        <TransformGroup name="Area1Height" translation="0 0 5" nodeId="183"/>
       </TransformGroup>
     </TransformGroup>
-    <TransformGroup name="indoorAreas" nodeId="74">
-      <TransformGroup name="Area1Start" translation="0.95 0 -2.5" nodeId="75">
-        <TransformGroup name="Area1Width" translation="-1.9 0 0" nodeId="76"/>
-        <TransformGroup name="Area1Height" translation="0 0 5" nodeId="77"/>
+    <TransformGroup name="levelAreas" nodeId="184">
+      <TransformGroup name="Area1Start" translation="0.45 0 -2" nodeId="185">
+        <TransformGroup name="Area1Width" translation="-0.9 0 0" nodeId="186"/>
+        <TransformGroup name="Area1Height" translation="0 0 4" nodeId="187"/>
       </TransformGroup>
     </TransformGroup>
-    <TransformGroup name="aiUpdateArea" nodeId="78">
-      <TransformGroup name="Area1Start" translation="0.95 0 -2.5" nodeId="79">
-        <TransformGroup name="Area1Width" translation="-1.9 0 0" nodeId="80"/>
-        <TransformGroup name="Area1Height" translation="0 0 5" nodeId="81"/>
+    <TransformGroup name="indoorAreas" nodeId="188">
+      <TransformGroup name="Area1Start" translation="0.95 0 -2.5" nodeId="189">
+        <TransformGroup name="Area1Width" translation="-1.9 0 0" nodeId="190"/>
+        <TransformGroup name="Area1Height" translation="0 0 5" nodeId="191"/>
       </TransformGroup>
     </TransformGroup>
-    <TransformGroup name="tipOcclusionUpdateAreas" nodeId="82">
-      <TransformGroup name="Area1Start" translation="0.95 0 2.5" nodeId="83">
-        <TransformGroup name="Area1End" translation="-1.9 0 -5" nodeId="84"/>
+    <TransformGroup name="aiUpdateArea" nodeId="192">
+      <TransformGroup name="Area1Start" translation="0.95 0 -2.5" nodeId="193">
+        <TransformGroup name="Area1Width" translation="-1.9 0 0" nodeId="194"/>
+        <TransformGroup name="Area1Height" translation="0 0 5" nodeId="195"/>
       </TransformGroup>
     </TransformGroup>
-    <Shape name="objectTrigger" translation="0 0 3.8" shapeId="26" static="true" trigger="true" collisionFilterGroup="0x20000000" collisionFilterMask="0x50000" nodeId="103" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="104">
-      <TransformGroup name="objectTriggerMarker" nodeId="105"/>
+    <TransformGroup name="tipOcclusionUpdateAreas" nodeId="196">
+      <TransformGroup name="Area1Start" translation="0.95 0 2.5" nodeId="197">
+        <TransformGroup name="Area1End" translation="-1.9 0 -5" nodeId="198"/>
+      </TransformGroup>
+    </TransformGroup>
+    <Shape name="playerTrigger" translation="1.5 0 2" shapeId="26" static="true" collisionFilterGroup="0x20000000" collisionFilterMask="0x100000" nodeId="199" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="119">
+      <TransformGroup name="playerTriggerMarker" nodeId="200"/>
     </Shape>
-    <Shape name="playerTrigger" translation="1.5 0 2" shapeId="27" static="true" nodeId="107" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="104">
-      <TransformGroup name="playerTriggerMarker" nodeId="108"/>
+    <Shape name="objectTrigger" translation="0 0 3.8" shapeId="27" static="true" trigger="true" collisionFilterGroup="0x20000000" collisionFilterMask="0x50000" nodeId="201" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="119">
+      <TransformGroup name="objectTriggerMarker" nodeId="202"/>
     </Shape>
+    <TransformGroup name="transporterStart" translation="0 0.6 2.5" nodeId="203"/>
+    <TransformGroup name="transporterEnd" translation="0 0.6 -2.5" nodeId="204"/>
   </Scene>
 
 </i3D>

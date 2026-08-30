@@ -1,0 +1,98 @@
+PalletTransporter = {}
+
+-- Kontrola pozadavku (pro placeable vracime true)
+function PalletTransporter.prerequisitesPresent(specializations)
+    return true
+end
+
+-- NOVÉ: registrace vlastních XML cest, jinak schema validace selže
+function PalletTransporter.registerXMLPaths(schema, basePath)
+    schema:setXMLSpecializationType("PalletTransporter")
+    schema:register(XMLValueType.NODE_INDEX, basePath .. ".palletTransporter.objectTrigger#node", "Trigger node pro detekci palet")
+    schema:setXMLSpecializationType()
+end
+
+-- FS25 PLACEABLE: Zde se registruji funkce pro dany placeable type
+function PalletTransporter.registerFunctions(placeableType)
+    -- Tímto enginu řekneme, že tato funkce existuje a může být volána z triggeru
+    SpecializationUtil.registerFunction(placeableType, "transporterTriggerCallback", PalletTransporter.transporterTriggerCallback)
+
+end
+
+-- FS25 PLACEABLE: Prihlaseni k udalostem
+function PalletTransporter.registerEventListeners(placeableType)
+    SpecializationUtil.registerEventListener(placeableType, "onLoad", PalletTransporter)
+    SpecializationUtil.registerEventListener(placeableType, "onDelete", PalletTransporter)
+    SpecializationUtil.registerEventListener(placeableType, "onUpdate", PalletTransporter)
+end
+
+
+-- Zavola se pri koupi nebo nacteni ulozene hry
+function PalletTransporter:onLoad(savegame)
+    self.spec_palletTransporter = {}
+    local spec = self.spec_palletTransporter
+    
+    -- Oprava: Přidán XMLValueType.NODE, aby engine věděl, že hledá index z i3d
+    spec.pickupTriggerNode = self.xmlFile:getValue("placeable.palletTransporter.objectTrigger#node", XMLValueType.NODE_INDEX, self.components, self.i3dMappings)
+    
+    print("[palletTransporter] DEBUG: pickupTriggerNode = " .. tostring(spec.pickupTriggerNode))
+
+    spec.activePallets = {}
+
+    if spec.pickupTriggerNode ~= nil then
+        local x, y, z = getWorldTranslation(spec.pickupTriggerNode)
+        print(string.format("[palletTransporter] DEBUG: trigger world pozice = %.2f, %.2f, %.2f", x, y, z))
+        addTrigger(spec.pickupTriggerNode, "transporterTriggerCallback", self)
+    else
+        print("[palletTransporter] ERROR: Nepodarilo se nacist objectTrigger z XML!")
+    end
+
+    print("----------------------------------------------------------------------------")
+    print("[palletTransporter] SKRIPT ZDE: Dopravnik byl uspesne polozen a inicializovan!")
+    print("----------------------------------------------------------------------------")
+end
+
+function PalletTransporter:transporterTriggerCallback(triggerId, otherId, onEnter, onLeave, onStay)
+    print("[palletTransporter] CALLBACK VOLÁN! otherId=" .. tostring(otherId) .. " onEnter=" .. tostring(onEnter))
+    local spec = self.spec_palletTransporter
+    
+    -- Ověříme, zda objekt vůbec existuje
+    if otherId ~= nil and otherId ~= 0 then
+        -- Získáme herní objekt (instanci) z ID uzlu
+        local object = g_currentMission:getNodeObject(otherId)
+        
+        if object ~= nil then
+            print("[palletTransporter] -> Objekt má herní instanci. Typ/Třída: " .. tostring(object.className or "Neznámá"))
+            -- Kontrola, zda objekt patří pod třídu Pallet (Farming Simulator 25 standard)
+            if object.isPallet or (object.isa ~= nil and object:isa(Pallet)) then
+                if onEnter then
+                     print("[palletTransporter] !!! TRIGGER NĚCO ZACHYTIL !!! Objekt ID: " .. tostring(otherId))
+                    -- Paleta vjela do zóny -> uložíme do tabulky
+                    if spec.activePallets[otherId] == nil then
+                        spec.activePallets[otherId] = object
+                        print("[palletTransporter] DETEKCE: Paleta (ID: " .. tostring(otherId) .. ") vstoupila na dopravník!")
+                    end
+                    
+                elseif onLeave then
+                    -- Paleta opustila zónu -> smažeme z tabulky
+                    if spec.activePallets[otherId] ~= nil then
+                        spec.activePallets[otherId] = nil
+                        print("[palletTransporter] DETEKCE: Paleta (ID: " .. tostring(otherId) .. ") opustila dopravník.")
+                    end
+                end
+                
+            end
+        end
+    end
+end
+
+function PalletTransporter:onDelete()
+    local spec = self.spec_palletTransporter
+    if spec ~= nil and spec.pickupTriggerNode ~= nil then
+        removeTrigger(spec.pickupTriggerNode)
+    end
+end
+
+function PalletTransporter:onUpdate(dt, isActiveForInput, isActiveForPeriod, isSelected)
+    -- Zde bude pozdeji logika pro posun palet
+end
