@@ -8,7 +8,7 @@ PalletTransporter.HANDOFF_DISTANCE = 0.1
 PalletTransporter.DEAD_END_OVERSHOOT = 0
 
 -- Doba (v ms) plynulého najetí palety na startNode - vyrovnání rotace + "výtah" na plošinu
-PalletTransporter.PICKUP_DURATION = 10
+PalletTransporter.PICKUP_DURATION = 1
 
 -- Pomocná funkce: lineární interpolace úhlu nejkratší cestou (ošetří přechod přes -pi/pi)
 local function angleLerp(fromAngle, toAngle, t)
@@ -24,6 +24,8 @@ end
 
 -- Globální seznam všech položených instancí tohoto placeable typu - potřebujeme ho pro navazování dopravníků na sebe
 PalletTransporter.transporters = PalletTransporter.transporters or {}
+-- Sleduje, který dopravník aktuálně "vlastní" danou paletu (klíč = palletId, hodnota = spec tabulka vlastníka)
+PalletTransporter.owners = PalletTransporter.owners or {}
 
 -- Kontrola pozadavku (pro placeable vracime true)
 function PalletTransporter.prerequisitesPresent(specializations)
@@ -33,17 +35,22 @@ end
 -- NOVÉ: registrace vlastních XML cest, jinak schema validace selže
 function PalletTransporter.registerXMLPaths(schema, basePath)
     schema:setXMLSpecializationType("PalletTransporter")
-    schema:register(XMLValueType.NODE_INDEX, basePath .. ".palletTransporter.objectTrigger#node", "Trigger node pro detekci palet")
-    schema:register(XMLValueType.NODE_INDEX, basePath .. ".palletTransporter.transporterStart#node", "Startovní bod posunu palety")
-    schema:register(XMLValueType.NODE_INDEX, basePath .. ".palletTransporter.transporterEnd#node", "Koncový bod posunu palety")
-    schema:register(XMLValueType.FLOAT, basePath .. ".palletTransporter.transporterEnd#speed", "Rychlost posunu palety (m/s)", 1.5)
+    schema:register(XMLValueType.NODE_INDEX, basePath .. ".palletTransporter.objectTrigger#node",
+        "Trigger node pro detekci palet")
+    schema:register(XMLValueType.NODE_INDEX, basePath .. ".palletTransporter.transporterStart#node",
+        "Startovní bod posunu palety")
+    schema:register(XMLValueType.NODE_INDEX, basePath .. ".palletTransporter.transporterEnd#node",
+        "Koncový bod posunu palety")
+    schema:register(XMLValueType.FLOAT, basePath .. ".palletTransporter.transporterEnd#speed",
+        "Rychlost posunu palety (m/s)", 1.5)
     schema:setXMLSpecializationType()
 end
 
 -- FS25 PLACEABLE: Zde se registruji funkce pro dany placeable type
 function PalletTransporter.registerFunctions(placeableType)
     -- Tímto enginu řekneme, že tato funkce existuje a může být volána z triggeru
-    SpecializationUtil.registerFunction(placeableType, "transporterTriggerCallback", PalletTransporter.transporterTriggerCallback)
+    SpecializationUtil.registerFunction(placeableType, "transporterTriggerCallback",
+        PalletTransporter.transporterTriggerCallback)
     SpecializationUtil.registerFunction(placeableType, "findNextTransporter", PalletTransporter.findNextTransporter)
 end
 
@@ -54,23 +61,26 @@ function PalletTransporter.registerEventListeners(placeableType)
     SpecializationUtil.registerEventListener(placeableType, "onUpdate", PalletTransporter)
 end
 
-
 -- Zavola se pri koupi nebo nacteni ulozene hry
 function PalletTransporter:onLoad(savegame)
     self.spec_palletTransporter = {}
     local spec = self.spec_palletTransporter
 
     -- Oprava: Přidán XMLValueType.NODE, aby engine věděl, že hledá index z i3d
-    spec.pickupTriggerNode = self.xmlFile:getValue("placeable.palletTransporter.objectTrigger#node", XMLValueType.NODE_INDEX, self.components, self.i3dMappings)
-    spec.startNode = self.xmlFile:getValue("placeable.palletTransporter.transporterStart#node", XMLValueType.NODE_INDEX, self.components, self.i3dMappings)
-    spec.endNode = self.xmlFile:getValue("placeable.palletTransporter.transporterEnd#node", XMLValueType.NODE_INDEX, self.components, self.i3dMappings)
+    spec.pickupTriggerNode = self.xmlFile:getValue("placeable.palletTransporter.objectTrigger#node",
+        XMLValueType.NODE_INDEX, self.components, self.i3dMappings)
+    spec.startNode = self.xmlFile:getValue("placeable.palletTransporter.transporterStart#node", XMLValueType.NODE_INDEX,
+        self.components, self.i3dMappings)
+    spec.endNode = self.xmlFile:getValue("placeable.palletTransporter.transporterEnd#node", XMLValueType.NODE_INDEX,
+        self.components, self.i3dMappings)
     spec.moveSpeed = self.xmlFile:getValue("placeable.palletTransporter.transporterEnd#speed", 1.5)
 
     spec.activePallets = {}
 
     if spec.pickupTriggerNode ~= nil then
         addTrigger(spec.pickupTriggerNode, "transporterTriggerCallback", self)
-        print("[palletTransporter] Trigger zaregistrován, dopravník je aktivní (node " .. tostring(spec.pickupTriggerNode) .. ").")
+        print("[palletTransporter] Trigger zaregistrován, dopravník je aktivní (node " ..
+            tostring(spec.pickupTriggerNode) .. ").")
     else
         print("[palletTransporter] ERROR: Nepodarilo se nacist objectTrigger z XML!")
     end
@@ -94,7 +104,8 @@ function PalletTransporter:onLoad(savegame)
             spec.dir.z = spec.dir.z / spec.totalDistance
         end
 
-        print(string.format("[palletTransporter] Dráha posunu nastavena, délka = %.2f m, rychlost = %.2f m/s.", spec.totalDistance, spec.moveSpeed))
+        print(string.format("[palletTransporter] Dráha posunu nastavena, délka = %.2f m, rychlost = %.2f m/s.",
+            spec.totalDistance, spec.moveSpeed))
     else
         print("[palletTransporter] ERROR: Nepodarilo se nacist transporterStart/transporterEnd z XML!")
     end
@@ -117,18 +128,20 @@ function PalletTransporter:transporterTriggerCallback(triggerId, otherId, onEnte
         -- Kontrola, zda objekt patří pod třídu Pallet (Farming Simulator 25 standard)
         if object ~= nil and (object.isPallet or (object.isa ~= nil and object:isa(Pallet))) then
             if onEnter then
-                -- Paleta vjela do zóny -> uložíme do tabulky a spustíme plynulé najetí na start (fáze "pickup")
                 if spec.activePallets[otherId] == nil then
-                    -- DŮLEŽITÉ: pokud paletu drží vidle (dynamický mount), musíme ji nejdřív odpojit.
-                    -- Jinak fyzikální joint mezi vidlemi a paletou bojuje s naším ručním posunem a vozidlo se zasekne.
+                    -- NOVÉ: pokud paletu už řídí jiný dopravník (probíhá handoff nebo se prostě
+                    -- fyzicky překrývá s naším triggerem), nepřebírej ji – jinak vzniknou dva
+                    -- souběžné vlastníky a paleta se "trhá" mezi dvěma cílovými pozicemi.
+                    local owner = PalletTransporter.owners[otherId]
+                    if owner ~= nil and owner ~= spec then
+                        return
+                    end
+
                     if object.unmountDynamic ~= nil and object.dynamicMountJointIndex ~= nil then
                         object:unmountDynamic()
-                        -- 3. Změna kolizní masky: Paleta bude ignorovat vozidla (Merlo/vidle), 
-                        -- ale zachová si kolizi s terénem, budovami a dopravníkem (maska 0x00200001)
                         setCollisionMask(object.rootNode, 0x00200001)
-                     end
+                    end
 
-                    -- Zapamatujeme si aktuální pozici a rotaci - z ní paletu plynule "narovnáme" a přisuneme na start
                     local ex, ey, ez = getWorldTranslation(otherId)
                     local erx, ery, erz = getWorldRotation(otherId)
 
@@ -141,19 +154,20 @@ function PalletTransporter:transporterTriggerCallback(triggerId, otherId, onEnte
                         distance = 0,
                         arrived = false
                     }
-                    -- Přepneme na kinematické tělo, ať s naším posunem nebojuje fyzikální simulace
                     setRigidBodyType(otherId, RigidBodyType.KINEMATIC)
+                    PalletTransporter.owners[otherId] = spec -- NOVÉ: zapíšeme vlastnictví
                     print("[palletTransporter] DETEKCE: Paleta (ID: " .. tostring(otherId) .. ") vstoupila na dopravník!")
                 end
-
             elseif onLeave then
-                -- DŮLEŽITÉ: pokud je paleta ještě v pohybu (nedojela na konec), IGNORUJEME.
-                -- Trigger zóna je malá a paleta z ní při posunu vyjede dřív, než dojede na konec dopravníku.
-                -- Dokončení (obnovení fyziky, odebrání ze sledování) řeší až onUpdate, jakmile paleta skutečně dorazí na konec.
                 local data = spec.activePallets[otherId]
                 if data ~= nil and data.arrived then
                     spec.activePallets[otherId] = nil
-                    setRigidBodyType(otherId, RigidBodyType.DYNAMIC)
+                    if entityExists(otherId) then
+                        setRigidBodyType(otherId, RigidBodyType.DYNAMIC)
+                    end
+                    if PalletTransporter.owners[otherId] == spec then
+                        PalletTransporter.owners[otherId] = nil -- NOVÉ: uvolníme vlastnictví
+                    end
                     print("[palletTransporter] DETEKCE: Paleta (ID: " .. tostring(otherId) .. ") opustila dopravník.")
                 end
             end
@@ -209,73 +223,83 @@ function PalletTransporter:onUpdate(dt, isActiveForInput, isActiveForPeriod, isS
     end
 
     for palletId, data in pairs(spec.activePallets) do
-        if data.phase == "pickup" then
-            -- Fáze 1: plynulé přesunutí z místa vyložení (např. z vidlí) na startNode + narovnání rotace
-            data.pickupElapsed = data.pickupElapsed + dt
-            local t = math.min(data.pickupElapsed / PalletTransporter.PICKUP_DURATION, 1)
-
-            local x = data.pickupFromPos.x + (spec.startPos.x - data.pickupFromPos.x) * t
-            local y = data.pickupFromPos.y + (spec.startPos.y - data.pickupFromPos.y) * t
-            local z = data.pickupFromPos.z + (spec.startPos.z - data.pickupFromPos.z) * t
-            setWorldTranslation(palletId, x, y, z)
-
-            local rx = angleLerp(data.pickupFromRot.x, spec.startRot.x, t)
-            local ry = angleLerp(data.pickupFromRot.y, spec.startRot.y, t)
-            local rz = angleLerp(data.pickupFromRot.z, spec.startRot.z, t)
-            setRotation(palletId, rx, ry, rz)
-
-            if t >= 1 then
-                -- Pickup hotový -> přepneme do fáze běžné jízdy po dráze start -> end
-                data.phase = "transport"
-                data.distance = 0
+        -- NOVÉ: paleta mohla mezitím zmizet (pohlcena skladem apod.) - bez tohoto padá setWorldTranslation
+        if not entityExists(palletId) then
+            spec.activePallets[palletId] = nil
+            if PalletTransporter.owners[palletId] == spec then
+                PalletTransporter.owners[palletId] = nil
             end
 
-        elseif data.phase == "transport" and not data.arrived then
-            -- Fáze 2: jízda po dráze start -> end konstantní rychlostí
-            -- dt je v ms, převedeme na sekundy
-            data.distance = data.distance + spec.moveSpeed * dt * 0.001
+        else
+            if data.phase == "pickup" then
+                -- Fáze 1: plynulé přesunutí z místa vyložení (např. z vidlí) na startNode + narovnání rotace
+                data.pickupElapsed = data.pickupElapsed + dt
+                local t = math.min(data.pickupElapsed / PalletTransporter.PICKUP_DURATION, 1)
 
-            if data.distance >= spec.totalDistance then
-                data.distance = spec.totalDistance
-                data.arrived = true
-            end
+                local x = data.pickupFromPos.x + (spec.startPos.x - data.pickupFromPos.x) * t
+                local y = data.pickupFromPos.y + (spec.startPos.y - data.pickupFromPos.y) * t
+                local z = data.pickupFromPos.z + (spec.startPos.z - data.pickupFromPos.z) * t
+                setWorldTranslation(palletId, x, y, z)
 
-            local x = spec.startPos.x + spec.dir.x * data.distance
-            local y = spec.startPos.y + spec.dir.y * data.distance
-            local z = spec.startPos.z + spec.dir.z * data.distance
+                local rx = angleLerp(data.pickupFromRot.x, spec.startRot.x, t)
+                local ry = angleLerp(data.pickupFromRot.y, spec.startRot.y, t)
+                local rz = angleLerp(data.pickupFromRot.z, spec.startRot.z, t)
+                setRotation(palletId, rx, ry, rz)
 
-            setWorldTranslation(palletId, x, y, z)
+                if t >= 1 then
+                    -- Pickup hotový -> přepneme do fáze běžné jízdy po dráze start -> end
+                    data.phase = "transport"
+                    data.distance = 0
+                end
 
-            if data.arrived then
-                -- Zkusíme najít navazující dopravník (jeho startNode blízko našeho endNode)
-                local nextSpec = self:findNextTransporter(spec.endPos)
+            elseif data.phase == "transport" and not data.arrived then
+                -- Fáze 2: jízda po dráze start -> end konstantní rychlostí
+                -- dt je v ms, převedeme na sekundy
+                data.distance = data.distance + spec.moveSpeed * dt * 0.001
 
-                if nextSpec ~= nil then
-                    -- Předáme paletu navazujícímu dopravníku - znovu přes plynulou "pickup" fázi,
-                    -- ať to nesekne, i kdyby startNode dalšího dopravníku nebyl na milimetr přesně napojený
-                    nextSpec.activePallets[palletId] = {
-                        object = data.object,
-                        phase = "pickup",
-                        pickupFromPos = { x = x, y = y, z = z },
-                        pickupFromRot = { x = spec.startRot.x, y = spec.startRot.y, z = spec.startRot.z },
-                        pickupElapsed = 0,
-                        distance = 0,
-                        arrived = false
-                    }
-                    spec.activePallets[palletId] = nil
-                    print("[palletTransporter] Paleta (ID: " .. tostring(palletId) .. ") predana navazujicimu dopravniku.")
-                else
-                    -- Konec řady bez navazujícího dopravníku -> posuneme paletu ještě kousek za hranu,
-                    -- ať celá "vyjede" z konstrukce a spadne rovně, místo aby se naklápěla přesně na okraji
-                    local ox = x + spec.dir.x * PalletTransporter.DEAD_END_OVERSHOOT
-                    local oy = y + spec.dir.y * PalletTransporter.DEAD_END_OVERSHOOT
-                    local oz = z + spec.dir.z * PalletTransporter.DEAD_END_OVERSHOOT
-                    setWorldTranslation(palletId, ox, oy, oz)
+                if data.distance >= spec.totalDistance then
+                    data.distance = spec.totalDistance
+                    data.arrived = true
+                end
 
-                    -- Vrátíme paletě normální fyziku a přestaneme ji sledovat
-                    setRigidBodyType(palletId, RigidBodyType.DYNAMIC)
-                    spec.activePallets[palletId] = nil
-                    print("[palletTransporter] Paleta (ID: " .. tostring(palletId) .. ") dojela na konec dopravníku.")
+                local x = spec.startPos.x + spec.dir.x * data.distance
+                local y = spec.startPos.y + spec.dir.y * data.distance
+                local z = spec.startPos.z + spec.dir.z * data.distance
+
+                setWorldTranslation(palletId, x, y, z)
+
+                if data.arrived then
+                    -- Zkusíme najít navazující dopravník (jeho startNode blízko našeho endNode)
+                    local nextSpec = self:findNextTransporter(spec.endPos)
+
+                    if nextSpec ~= nil then
+                        -- Předáme paletu navazujícímu dopravníku - znovu přes plynulou "pickup" fázi,
+                        -- ať to nesekne, i kdyby startNode dalšího dopravníku nebyl na milimetr přesně napojený
+                        nextSpec.activePallets[palletId] = {
+                            object = data.object,
+                            phase = "pickup",
+                            pickupFromPos = { x = x, y = y, z = z },
+                            pickupFromRot = { x = spec.startRot.x, y = spec.startRot.y, z = spec.startRot.z },
+                            pickupElapsed = 0,
+                            distance = 0,
+                            arrived = false
+                        }
+                        spec.activePallets[palletId] = nil
+                        PalletTransporter.owners[palletId] = nextSpec  -- NOVÉ: přepis vlastnictví na dalšího
+                        print("[palletTransporter] Paleta (ID: " .. tostring(palletId) .. ") predana navazujicimu dopravniku.")
+                    else
+                        -- Konec řady bez navazujícího dopravníku -> posuneme paletu ještě kousek za hranu
+                        local ox = x + spec.dir.x * PalletTransporter.DEAD_END_OVERSHOOT
+                        local oy = y + spec.dir.y * PalletTransporter.DEAD_END_OVERSHOOT
+                        local oz = z + spec.dir.z * PalletTransporter.DEAD_END_OVERSHOOT
+                        setWorldTranslation(palletId, ox, oy, oz)
+
+                        -- Vrátíme paletě normální fyziku a přestaneme ji sledovat
+                        setRigidBodyType(palletId, RigidBodyType.DYNAMIC)
+                        spec.activePallets[palletId] = nil
+                        PalletTransporter.owners[palletId] = nil  -- NOVÉ: konec řady, uvolnit vlastnictví
+                        print("[palletTransporter] Paleta (ID: " .. tostring(palletId) .. ") dojela na konec dopravniku.")
+                    end
                 end
             end
         end
