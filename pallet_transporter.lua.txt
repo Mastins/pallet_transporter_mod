@@ -54,10 +54,10 @@ end
 -- Zavola se pri koupi nebo nacteni ulozene hry
 function PalletTransporter:onLoad(savegame)
     self.spec_palletTransporter = {}
+    local spec = self.spec_palletTransporter
     spec.activePallets = {}
     spec.pendingPallets = {} -- NOVÉ: palety, které vjely do zóny, ale ještě jsou na vidlích - čekáme na uvolnění
-    local spec = self.spec_palletTransporter
-
+    
     spec.pickupTriggerNode = self.xmlFile:getValue("placeable.palletTransporter.objectTrigger#node",
         XMLValueType.NODE_INDEX, self.components, self.i3dMappings)
     spec.startNode = self.xmlFile:getValue("placeable.palletTransporter.transporterStart#node", XMLValueType.NODE_INDEX,
@@ -186,17 +186,13 @@ end
 function PalletTransporter:onUpdate(dt, isActiveForInput, isActiveForPeriod, isSelected)
     local spec = self.spec_palletTransporter
 
-    -- DŮLEŽITÉ: bez tohoto by se update po prvním snímku "uspal" a přestal by se volat
     self:raiseActive()
 
-    -- Bez platné dráhy (start/end) nemá smysl cokoliv počítat
     if spec.startPos == nil or spec.totalDistance == nil or spec.totalDistance <= 0.0001 then
         return
     end
 
     -- Kontrolujeme čekající palety - jakmile se uvolní z vidlí, bezpečně je převezmeme.
-    -- Tohle děláme v onUpdate (ne v trigger callbacku), protože nastavení KINEMATIC/rotace
-    -- volané přímo z fyzikálního trigger callbacku se nespolehlivě "nechytilo".
     for palletId, _ in pairs(spec.pendingPallets) do
         if not entityExists(palletId) then
             spec.pendingPallets[palletId] = nil
@@ -204,7 +200,6 @@ function PalletTransporter:onUpdate(dt, isActiveForInput, isActiveForPeriod, isS
             local object = g_currentMission:getNodeObject(palletId)
 
             if object ~= nil and object.dynamicMountJointIndex == nil then
-                -- Paleta je teď volná (položená, vidle odjely) - přebíráme ji
                 local owner = PalletTransporter.owners[palletId]
                 if owner == nil or owner == spec then
                     setRigidBodyType(palletId, RigidBodyType.KINEMATIC)
@@ -230,12 +225,10 @@ function PalletTransporter:onUpdate(dt, isActiveForInput, isActiveForPeriod, isS
                 end
                 spec.pendingPallets[palletId] = nil
             end
-            -- jinak je pořád na vidlích - necháme v pendingPallets a zkusíme znovu příští snímek
         end
     end
 
     for palletId, data in pairs(spec.activePallets) do
-        -- Paleta mohla mezitím zmizet (pohlcena skladem apod.) - bez tohoto padá setWorldTranslation
         if not entityExists(palletId) then
             spec.activePallets[palletId] = nil
             if PalletTransporter.owners[palletId] == spec then
@@ -244,16 +237,14 @@ function PalletTransporter:onUpdate(dt, isActiveForInput, isActiveForPeriod, isS
         else
             if data.phase == "pickup" then
                 if not data.initialized then
-                    -- NOVÉ: KINEMATIC + world rotace se nastavují TADY, ne v trigger callbacku.
-                    -- Uvnitř fyzikálního trigger callbacku se tahle nastavení nespolehlivě "nechytla"
-                    -- (engine je zřejmě v rámci stejného fyzikálního kroku přepsal zpět) - proto se
-                    -- paleta předtím srovnala až u druhého dopravníku, ne hned při vstupu.
                     setRigidBodyType(palletId, RigidBodyType.KINEMATIC)
-                    setWorldRotation(palletId, spec.startRot.x, spec.startRot.y, spec.startRot.z)
                     data.initialized = true
                 end
 
-                -- Fáze 1: plynulé přesunutí na startNode konstantní rychlostí (ne pevnou dobou)
+                -- OPRAVA: Uzamčení rotace provádíme KAŽDÝ SNÍMEK během fáze pickup
+                setWorldRotation(palletId, spec.startRot.x, spec.startRot.y, spec.startRot.z)
+
+                -- Fáze 1: plynulé přesunutí na startNode konstantní rychlostí
                 if data.pickupTotalDistance <= 0.0001 then
                     setWorldTranslation(palletId, spec.startPos.x, spec.startPos.y, spec.startPos.z)
                     data.phase = "transport"
@@ -275,7 +266,6 @@ function PalletTransporter:onUpdate(dt, isActiveForInput, isActiveForPeriod, isS
                 end
             elseif data.phase == "transport" and not data.arrived then
                 -- Fáze 2: jízda po dráze start -> end konstantní rychlostí
-                -- dt je v ms, převedeme na sekundy
                 data.distance = data.distance + spec.moveSpeed * dt * 0.001
 
                 if data.distance >= spec.totalDistance then
@@ -290,14 +280,9 @@ function PalletTransporter:onUpdate(dt, isActiveForInput, isActiveForPeriod, isS
                 setWorldTranslation(palletId, x, y, z)
 
                 if data.arrived then
-                    -- Zkusíme najít navazující dopravník (jeho startNode blízko našeho endNode)
                     local nextSpec = self:findNextTransporter(spec.endPos)
 
                     if nextSpec ~= nil then
-                        -- Rotaci na dalším dopravníku srovnáme hned (užitečné i pro zatáčky,
-                        -- kde se startRot může lišit)
-                        setWorldRotation(palletId, nextSpec.startRot.x, nextSpec.startRot.y, nextSpec.startRot.z)
-
                         local dx = nextSpec.startPos.x - x
                         local dy = nextSpec.startPos.y - y
                         local dz = nextSpec.startPos.z - z
@@ -313,20 +298,18 @@ function PalletTransporter:onUpdate(dt, isActiveForInput, isActiveForPeriod, isS
                         }
                         spec.activePallets[palletId] = nil
                         PalletTransporter.owners[palletId] = nextSpec
-                        print("[palletTransporter] Paleta (ID: " ..
-                            tostring(palletId) .. ") predana navazujicimu dopravniku.")
+                        print("[palletTransporter] Paleta (ID: " .. tostring(palletId) .. ") předána navazujícímu dopravníku.")
                     else
-                        -- Konec řady bez navazujícího dopravníku -> posuneme paletu ještě kousek za hranu
+                        -- Konec řady bez navazujícího dopravníku
                         local ox = x + spec.dir.x * PalletTransporter.DEAD_END_OVERSHOOT
                         local oy = y + spec.dir.y * PalletTransporter.DEAD_END_OVERSHOOT
                         local oz = z + spec.dir.z * PalletTransporter.DEAD_END_OVERSHOOT
                         setWorldTranslation(palletId, ox, oy, oz)
 
-                        -- Vrátíme paletě normální fyziku a přestaneme ji sledovat
                         setRigidBodyType(palletId, RigidBodyType.DYNAMIC)
                         spec.activePallets[palletId] = nil
                         PalletTransporter.owners[palletId] = nil
-                        print("[palletTransporter] Paleta (ID: " .. tostring(palletId) .. ") dojela na konec dopravniku.")
+                        print("[palletTransporter] Paleta (ID: " .. tostring(palletId) .. ") dojela na konec dopravníku.")
                     end
                 end
             end

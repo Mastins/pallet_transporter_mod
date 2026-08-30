@@ -11,7 +11,7 @@ PalletTransporter.DEAD_END_OVERSHOOT = 10
 -- Použití rychlosti místo pevné doby zajistí, že krátká vzdálenost (např. handoff mezi
 -- navazujícími dopravníky) proběhne téměř okamžitě a nepůsobí to jako zaseknutí,
 -- zatímco delší vzdálenost (paleta shozená vidlemi daleko od startu) doplyne přirozeně.
-PalletTransporter.PICKUP_SPEED = 2.0
+PalletTransporter.PICKUP_SPEED = 1.5
 
 -- Globální seznam všech položených instancí tohoto placeable typu - potřebujeme ho pro navazování dopravníků na sebe
 PalletTransporter.transporters = PalletTransporter.transporters or {}
